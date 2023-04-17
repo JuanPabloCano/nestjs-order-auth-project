@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package users;
+
+message UserEntity {
+  string id = 1;
+  string fullName = 2;
+  string document = 3;
+  string email = 4;
+  int32 age = 5;
+  string password = 6;
+}
+
+message UserEntityRequest {
+  string fullName = 1;
+  string document = 2;
+  string email = 3;
+  int32 age = 4;
+  string password = 5;
+}
+
+message UserCredentials {
+  string email = 1;
+  string password = 2;
+}
+
+message AccessToken {
+  string access_token = 1;
+}
+
+message UserEntityList {
+  repeated UserEntity users = 1;
+}
+
+message Empty{}
+
+service UserEntityService {
+  rpc validateUser(UserCredentials) returns (UserEntity);
+  rpc login(UserEntity) returns (AccessToken);
+  rpc register(UserEntityRequest) returns (UserEntity);
+  rpc findAllUsers(Empty) returns (UserEntityList);
+}
